@@ -1,6 +1,5 @@
 ﻿using Course.Entities;
 using System;
-using System.Globalization;
 using System.IO;
 
 namespace Course {
@@ -14,22 +13,22 @@ namespace Course {
                 string[] lines = File.ReadAllLines(sourceFilePath);
 
                 string sourceFolderPath = Path.GetDirectoryName(sourceFilePath);
-                string targetFolderPath = sourceFolderPath + @"\out";
-                string targetFilePath = targetFolderPath + @"\summary.csv";
+                string targetFolderPath = sourceFolderPath + @"\Total";
+                string targetFilePath = targetFolderPath + @"\summary.txt";
 
                 Directory.CreateDirectory(targetFolderPath);
 
                 using (StreamWriter sw = File.AppendText(targetFilePath)) {
                     foreach (string line in lines) {
 
-                        string[] fields = line.Split(',');
+                        string[] fields = line.Split(", ");
                         string name = fields[0];
-                        double price = double.Parse(fields[1], CultureInfo.InvariantCulture);
+                        double price = double.Parse(fields[1]);
                         int quantity = int.Parse(fields[2]);
 
                         Product prod = new Product(name, price, quantity);
 
-                        sw.WriteLine(prod.Name + "," + prod.Total().ToString("F2", CultureInfo.InvariantCulture));
+                        sw.WriteLine("Nome: " + prod.Name + " - Total:" + prod.Total());
                     }
                 }
             }
